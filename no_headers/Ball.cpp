@@ -3,7 +3,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "Ball.hpp"
+#include <Ball.hpp>
+#include <GL/freeglut.h>
+
+float pi = 3.14159;
+
 using std::cout;
 using std::endl;
 void Ball::SetSpeed( double newSpeed)
@@ -11,7 +15,7 @@ void Ball::SetSpeed( double newSpeed)
     this->speed = newSpeed;
 }
 
-void Ball::SetCenter(int newx, int newy)
+void Ball::SetCenter(float newx, float newy)
 {
     this->x = newx;
     this->y = newy;
@@ -22,9 +26,9 @@ void Ball::SetDirection(double newDir)
     this->direction = newDir;
 }
 
-Rect Ball::GetRegion()
+float Ball::GetRadius()
 {
-    return this->region;
+    return this->radius;
 }
 
 Ball* Ball::GetLink()
@@ -37,7 +41,7 @@ double Ball::GetSpeed()
     return this->speed;
 }
 
-void Ball::GetCenter(int* x, int* y)
+void Ball::GetCenter(float *x, float *y)
 {
     *x = this->x;
     *y = this->y;
@@ -45,35 +49,41 @@ void Ball::GetCenter(int* x, int* y)
 
 double Ball::GetDirection()
 {
-    return this->direction();
+    return this->direction;
 }
 
 int Ball::GetMass()
 {
-    return this->mass:
+    return this->mass;
 }
 
-Ball::Ball( int x, int y, int mass, CBall* pNextBall )
+Ball::Ball( int x, int y, float radius, double dir, int mass, Ball* pNextBall )
 {
     this->SetCenter( x, y );
-    this->SetDirection( 0 );
+    this->SetDirection( dir );
     this->pLink = pNextBall;
     this->mass = mass;
+    this->radius = radius;
 
 }
 
 void Ball::Draw()
-{
-    glColor3ub( 0, 0, 255 );
-    glPointSize( (float)region.Width() );
-    glEnable( GL_POINT_SMOOTH );
-    glBegin( GL_POINTS );
-    int cx, cy;
-    region.CenterPoint( &cx, &cy );
-    glVertex2i( cx, cy );
+{ 
+    float x = this->x;
+    float y = this->y;
+    float r = this->radius;
+    float amountSegments = 100;
+    glBegin(GL_POLYGON);
+    for(int i = 0; i < amountSegments ; i++)
+    {
+        float angle1 = 2.0 * 3.1415926 * float(i) / float(amountSegments);
+        float dx = r * cosf(angle1);
+        float dy = r * sinf(angle1);
+        glVertex3f(x + dx, y + dy, 0.0);
+    }
     glEnd();
-    glDisable( GL_POINT_SMOOTH );
 }
+
 
 double Ball::GetAngleCenters(int x1, int y1, int x2, int y2)
 {
@@ -81,29 +91,27 @@ double Ball::GetAngleCenters(int x1, int y1, int x2, int y2)
     {
         return pi/2;
     }
-    if ((x1 = x2) && (y1 > y2))
+    if ((x1 == x2) && (y1 > y2))
     {
         return -pi/2;
     }
-    if ((y1 = y2) && (x1 > x2))
+    if ((y1 == y2) && (x1 > x2))
     {
         return pi;
     }
-                            }
-    if ((y1 = y2) && (x1 < x2))
+    if ((y1 == y2) && (x1 < x2))
     { 
         return 0;
     }
 
     return atan((y2-y1)/(x2-x1));
 }
-}
 
-void HitBy( Ball* pBall)
+void Ball::HitBy( Ball* pBall)
 {
     //расчет нового направления для шаров
-    int x1, y1, x2, y2;
-    GetCenter( &x1, &y1);
+    float x1, y1, x2, y2;
+    this->GetCenter( &x1, &y1);
     pBall->GetCenter(&x2, &y2);
     double angle_centers = GetAngleCenters(x1, y1, x2, y2);
     // компонента х
@@ -126,8 +134,8 @@ void HitBy( Ball* pBall)
     // угол в лаб системе отсчета
     double angle1_lab1 = angle_centers + angle1;
     double angle1_lab2 = angle_centers + angle2;
-    this->SetDirection(angle_lab1);
-    pBall->SetDirection(angle_lab2);
+    this->SetDirection(angle1_lab1);
+    pBall->SetDirection(angle1_lab2);
 
     //расчеты для модулей скоростей
     this->SetSpeed( sqrt(newv1x*newv1x + newv1y*newv1y));

@@ -3,22 +3,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <GL/freeglut.h>
 using std::cout;
 using std::endl;
 
 
 Wall::Wall( int left, int top, int right, int bottom,
-        double cf, CWall* pNextWall )
+        double cf, Wall* pNextWall )
 {
-    convertFactor = cf;
+    this->convertFactor = cf;
     region.SetRect( left, top, right, bottom );
     pLink = pNextWall;
 }
 
 void Wall::Draw()
 {
-    glColor3ub( 0, 255, 0 );
-    glRecti( region.x1, region.y1, region.x2, region.y2 );
+    glBegin(GL_POLYGON);
+    glVertex3f(float(this->region.x1), float(this->region.y1), 0.0);
+    glVertex3f(float(this->region.x1), float(this->region.y2), 0.0);
+    glVertex3f(float(this->region.x2), float(this->region.y2), 0.0);
+    glVertex3f(float(this->region.x2), float(this->region.y1), 0.0);
+    glEnd();
 }
 
 void Wall::HitBy( Ball* pBall )

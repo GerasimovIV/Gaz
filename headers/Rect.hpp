@@ -2,7 +2,7 @@
 #define Rect_H
 class Rect {
     public:
-        Rect()
+        Rect();
         Rect(int nx1, int ny1, int nx2, int ny2);
         void SetRect( int left, int top, int right, int bottom);
         void OffsetRect(int dx, int dy);

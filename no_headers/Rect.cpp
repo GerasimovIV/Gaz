@@ -44,7 +44,7 @@ bool Rect::IsRectEmpty()
 {
     return ( x1 == x2 && y1 == y2 );
 }
-int Width()
+int Rect::Width()
 {
     return x2 - x1 + 1;
 }
@@ -57,7 +57,7 @@ Rect Rect::IntersectRect( Rect& another )
     // potom
 
 }
-void NormalizeRect()
+void Rect::NormalizeRect()
 {
     if (this->x1 > this->x2)
     {

@@ -1,6 +1,7 @@
 #ifndef Wall_H
 #define Wall_H
 #include "Rect.hpp"
+#include "Ball.hpp"
 class Wall {
     public:
         Wall (int left, int top, int right, int bottom, double cf, Wall* pNextWall );
@@ -11,6 +12,6 @@ class Wall {
     private :
         Wall* pLink;
         Rect region;
-        double converFactor;
+        double convertFactor;
 };
 #endif
