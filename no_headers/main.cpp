@@ -2,12 +2,34 @@
 #include <GL/freeglut.h> 
 #include "Ball.hpp"
 #include "Wall.hpp"
+#include <cmath>
+#include <stdio.h>
 float angle = 0.0f; 
-float i = 0.0f;
-Ball* ball1 = new Ball(2, 1, 0.2, 0.0, 1,  NULL);
-//Wall* right_wall = new Wall(-4.0, 4.0, -3.9999999, -4.0, 1, NULL);
 
 
+Ball* ball1 = new Ball(2, -3, 0.2, 2.5, 1, 0.2,  NULL);
+Ball* ball2= new Ball(2, -3, 0.2, 3.0, 1, 0.3,  ball1);
+
+
+
+
+
+
+
+Wall* left_wall = new Wall(-4.0, 4.0, -3.5, -4.0, 3.1415, NULL);
+Wall* right_wall = new Wall(3.5, 4.0, 4.0, -4.0, -3.1415, left_wall);
+Wall* top_wall = new Wall(-4.0, 5.0, 4.0, 4.0, 0, right_wall);
+Wall* bottom_wall = new Wall(-4.0, -4.0, 4.0, -5.0, 0, top_wall);
+
+float modul(float a)
+{
+    if ( a >= 0 )
+    {
+        return a;
+    }
+    return -a;
+    
+}
 
 void changeSize(int w, int h)
 { 
@@ -34,47 +56,91 @@ void renderScene(void)
 // очистка буфера цвета и глубины 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
 // обнуление трансформации 
-    glLoadIdentity(); 
+    glLoadIdentity();
+
 // установка камеры 
     gluLookAt( 0.0f, 0.0f, 10.0f,0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f); 
   
 
 
     glRotatef(angle, 0.0f, 1.0f, 0.0f);
+
+
+    // проверка на соударения со стенками
+    // Проверка на попадание в стенку
+    //
+
+
+    Ball* ball = ball2;
+    while (ball != NULL)
+    {
+        float x5, x6;
+        ball->GetCenter(&x5, &x6);
+        ball->SetCenter(x5 + (ball->GetSpeed())*cosf(ball->GetDirection()), x6 + (ball->GetSpeed())*sin(ball->GetDirection()));
+
+	    Wall* stena = bottom_wall;
+//    printf("%f | %f\n", (ball1->GetRegion()).x1, (stena->GetRegion()).x2);
+	    while ( stena != NULL )
+	    {
+		    if ( (stena->GetRegion()).IntersectRect( ball->GetRegion() ) == true )
+            {
+                ball->SetDirection(stena->GetConvertFactor() - ball->GetDirection());
+                ball->SetCenter(x5 + (ball->GetSpeed())*cosf(ball->GetDirection()), x6 + (ball->GetSpeed())*sin(ball->GetDirection()));
+
+            }
+            stena = stena->GetLink();
+        }
+        ball = ball->GetLink();
+
+
+    }
+
+/*    if (ball1->GetRadius() >= modul( x5 + 3.5))
+    {
+        ball1->SetDirection(3.1415 - ball1->GetDirection());
+        ball1->SetCenter(x5 + (ball1->GetSpeed())*cosf(ball1->GetDirection()), x6 + (ball1->GetSpeed())*sin(ball1->GetDirection()));
+
+    }*/
     ball1->Draw();
+    ball2->Draw();
+//    printf("%f\n", ball1->speed);
+   
 
-    float x1, y1;
-    ball1->GetCenter(&x1, &y1);
-    ball1->SetCenter(x1-i, y1);
-    glColor3f(0.0, 0.0, 1.0);
-    float x = 0;
-    float y = 0;
-    float r = 0.2;
+    bottom_wall->Draw();
+    left_wall->Draw();
+    right_wall->Draw();
+    top_wall->Draw();
+    
+    
 
+
+
+
+/*    glColor3f(0.0, 0.0, 1.0);
+    float x2 = -1;
+    float y2 = -1;
+    float r2 = 0.2;
+
+   
     glBegin(GL_POLYGON);
     for(int j = 0; j < 100 ; j++)
     {
-        float angle1 = 2.0 * 3.1415926 * float(j) / float(100);
-        float dx = r * cosf(angle1);
-        float dy = r * sinf(angle1);
-        glVertex3f(x + dx + i, y + dy, 0.0);
+        float angle12 = 2.0 * 3.1415926 * float(j) / float(100);
+        float dx2 = r2 * cosf(angle12);
+        float dy2 = r2 * sinf(angle12);
+        glVertex3f(x2 + dx2 - i, y2 + dy2, 0.0);
     }
-    glEnd();
-    glColor3f(0.0, 1.0 , 0.0);
-//    glColor3f(1.0, 0.0, 0.0);
-//    right_wall->Draw();
-
-
-    ball1->SetCenter(2-i, 1);
+    glEnd();*/
 //    angle+=0.9f; 
-    i += 0.02;
+   
 
 
 
     glutSwapBuffers(); 
 } 
 
-int main(int argc, char **argv) { 
+int main(int argc, char **argv) 
+{ 
 
 // Инициализация GLUT и создание окна 
     glutInit(&argc, argv); 
@@ -83,7 +149,7 @@ int main(int argc, char **argv) {
     glutInitWindowSize(800,800); 
     glutCreateWindow("treeangle"); 
 
-// регистрация 
+// регистрация вызываемых функций
     glutDisplayFunc(renderScene); 
     glutReshapeFunc(changeSize); 
     glutIdleFunc(renderScene); 

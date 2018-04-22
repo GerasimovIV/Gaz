@@ -19,6 +19,8 @@ void Ball::SetCenter(float newx, float newy)
 {
     this->x = newx;
     this->y = newy;
+    (this->region).SetRect( this->x - this->radius , this->y + this->radius , this->x + this->radius, this->y - this->radius );
+
 }
 
 void Ball::SetDirection(double newDir)
@@ -36,7 +38,7 @@ Ball* Ball::GetLink()
     return this->pLink;
 }
 
-double Ball::GetSpeed()
+float Ball::GetSpeed()
 {
     return this->speed;
 }
@@ -57,29 +59,30 @@ int Ball::GetMass()
     return this->mass;
 }
 
-Ball::Ball( int x, int y, float radius, double dir, int mass, Ball* pNextBall )
+Ball::Ball( float x, float y, float radius, double dir, int mass, float speed, Ball* pNextBall )
 {
     this->SetCenter( x, y );
     this->SetDirection( dir );
     this->pLink = pNextBall;
     this->mass = mass;
     this->radius = radius;
+    this->speed = speed;
+    region.SetRect( x - 0.5 * radius , y + 0.5 * radius , x + 0.5 * radius, y - 0.5 * radius );
 
 }
 
+
 void Ball::Draw()
 { 
-    float x = this->x;
-    float y = this->y;
-    float r = this->radius;
+    glColor3f(0.0, 1.0, 0.0);
     float amountSegments = 100;
     glBegin(GL_POLYGON);
     for(int i = 0; i < amountSegments ; i++)
     {
         float angle1 = 2.0 * 3.1415926 * float(i) / float(amountSegments);
-        float dx = r * cosf(angle1);
-        float dy = r * sinf(angle1);
-        glVertex3f(x + dx, y + dy, 0.0);
+        float dx = this->radius * cosf(angle1);
+        float dy = this->radius * sinf(angle1);
+        glVertex3f(this->x + dx, this->y + dy, 0.0);
     }
     glEnd();
 }

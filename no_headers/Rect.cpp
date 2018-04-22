@@ -13,7 +13,7 @@ Rect::Rect()
     y2 = 0;
 }
 
-Rect::Rect( int nx1, int ny1, int nx2, int ny2 )
+Rect::Rect( float nx1, float ny1, float nx2, float ny2 )
 {
     x1 = nx1; 
     y1 = ny1; 
@@ -21,21 +21,21 @@ Rect::Rect( int nx1, int ny1, int nx2, int ny2 )
     y2 = ny2;
 }
 
-void Rect::SetRect( int left, int top, int right, int bottom )
+void Rect::SetRect( float left, float top, float right, float bottom )
 {
     x1 = left; 
     y1 = top; 
     x2 = right; 
     y2 = bottom;
 }
-void Rect::OffsetRect( int dx, int dy )
+void Rect::OffsetRect( float dx, float dy )
 {
     x1 += dx; 
     y1 += dy; 
     x2 += dx; 
     y2 += dy;
 }
-void Rect::CenterPoint( int* x, int* y )
+void Rect::CenterPoint( float* x, float* y )
 {
     *x = (x1 + x2)/2; 
     *y = (y1 + y2)/2;
@@ -52,10 +52,22 @@ int Rect::Height()
 {
     return y2 - y1 + 1;
 }
-Rect Rect::IntersectRect( Rect& another )
+bool  Rect::IntersectRect( Rect another )
 {
-    // potom
+    this->NormalizeRect();
+    another.NormalizeRect();
+//    printf("%f | %f | %f \n", this->x1, another.x1, this->x2);
+    //обнаружим пересечение по первой координате
+    if (((this->x1 <= another.x1) && (another.x1 <= this->x2)) || ((this->x1 <= another.x2) && (another.x2 <= this->x2)))
+    {
+        //по второй координате
+        if (((this->y1 >= another.y1) && (another.y1 >= this->y2)) || ((this->y1 >= another.y2) && (another.y2 >= this->y2)))
+        {
 
+            return true;
+        }
+    }
+    return false;
 }
 void Rect::NormalizeRect()
 {

@@ -69,4 +69,8 @@ Ball.hpp
 /home/athlete/MIPT/informatika/2_semestr/zadanie/2/no_headers/Ball.hpp
 Wall.hpp
 /home/athlete/MIPT/informatika/2_semestr/zadanie/2/no_headers/Wall.hpp
+cmath
+-
+stdio.h
+-
 

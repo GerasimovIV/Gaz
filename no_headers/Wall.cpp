@@ -8,7 +8,7 @@ using std::cout;
 using std::endl;
 
 
-Wall::Wall( int left, int top, int right, int bottom,
+Wall::Wall( float left, float top, float right, float bottom,
         double cf, Wall* pNextWall )
 {
     this->convertFactor = cf;
@@ -18,6 +18,7 @@ Wall::Wall( int left, int top, int right, int bottom,
 
 void Wall::Draw()
 {
+    glColor3f(1.0,0.0,0.0);
     glBegin(GL_POLYGON);
     glVertex3f(float(this->region.x1), float(this->region.y1), 0.0);
     glVertex3f(float(this->region.x1), float(this->region.y2), 0.0);

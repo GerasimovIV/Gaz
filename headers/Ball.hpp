@@ -3,7 +3,7 @@
 #include "Rect.hpp"
 class Ball{
     public:
-        Ball(int x, int y, float radius, double dir, int mass,  Ball* pNextBall);
+        Ball(float x, float y, float radius, double dir, int mass, float speed, Ball* pNextBall);
         void Draw();
         void Update();
         void HitBy( Ball* pBall);
@@ -15,17 +15,22 @@ class Ball{
         float GetRadius();
         Ball* GetLink();
         void GetCenter(float* x, float* y);
-        double GetSpeed();
+        float GetSpeed();
         double GetDirection();
         int GetMass();
         double GetAngleCenters(int x1, int y1, int x2, int y2);
+        Rect GetRegion() { return region; }
+        
+        
+        
     private:
         Ball* pLink;
+        Rect region;
+        float x;
+        float y;
+        float speed;
         float radius;
         double direction;
-        int x;
-        int y;
-        double speed;
         int mass;
 };
 #endif
