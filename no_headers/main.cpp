@@ -6,13 +6,9 @@
 #include <stdio.h>
 float angle = 0.0f; 
 
-
-Ball* ball1 = new Ball(2, -3, 0.2, 2.5, 1, 0.2,  NULL);
-Ball* ball2= new Ball(2, -3, 0.2, 3.0, 1, 0.3,  ball1);
-
-
-
-
+// х у радиус направление масса скорость след
+Ball* ball1 = new Ball(3, 0, 0.2, 3.1415, 1, 0.1,  NULL);
+Ball* ball2= new Ball(-2, 0.2, 1, 1, 8, 0,  ball1);
 
 
 
@@ -74,12 +70,14 @@ void renderScene(void)
     Ball* ball = ball2;
     while (ball != NULL)
     {
+        Ball* t = ball2;
+
         float x5, x6;
         ball->GetCenter(&x5, &x6);
         ball->SetCenter(x5 + (ball->GetSpeed())*cosf(ball->GetDirection()), x6 + (ball->GetSpeed())*sin(ball->GetDirection()));
 
 	    Wall* stena = bottom_wall;
-//    printf("%f | %f\n", (ball1->GetRegion()).x1, (stena->GetRegion()).x2);
+        printf("%f | %f\n", (ball1->GetRegion()).x1, (ball2->GetRegion()).x1);
 	    while ( stena != NULL )
 	    {
 		    if ( (stena->GetRegion()).IntersectRect( ball->GetRegion() ) == true )
@@ -90,9 +88,25 @@ void renderScene(void)
             }
             stena = stena->GetLink();
         }
+        while (t != NULL)
+        {
+            if (t != ball)
+            {
+                float x_1, y_1;
+                float x_2, y_2;
+                t->GetCenter(&x_1, &y_1);
+                ball->GetCenter(&x_2, &y_2);
+                float distance = sqrt((x_1 - x_2)*(x_1 - x_2) + (y_1 - y_2)*(y_1 - y_2));
+                if ( distance <= (t->GetRadius() + ball->GetRadius()))
+                {
+                    printf("YES\n");
+                    ball->HitBy(t);
+                    printf("2222 %f | %f\n", (ball1->GetRegion()).x1, (ball2->GetRegion()).x1);
+                }
+            }
+            t = t->GetLink();
+        }
         ball = ball->GetLink();
-
-
     }
 
 /*    if (ball1->GetRadius() >= modul( x5 + 3.5))

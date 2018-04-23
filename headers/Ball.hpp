@@ -17,11 +17,11 @@ class Ball{
         void GetCenter(float* x, float* y);
         float GetSpeed();
         double GetDirection();
-        int GetMass();
-        double GetAngleCenters(int x1, int y1, int x2, int y2);
+        float GetMass();
+        double GetAngleCenters(float x1, float y1, float x2, float y2);
         Rect GetRegion() { return region; }
-        
-        
+        double GetAngle_from( float new1x, float newv1y);
+                
         
     private:
         Ball* pLink;
@@ -31,6 +31,6 @@ class Ball{
         float speed;
         float radius;
         double direction;
-        int mass;
+        float mass;
 };
 #endif
