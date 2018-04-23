@@ -7,8 +7,8 @@
 float angle = 0.0f; 
 
 // х у радиус направление масса скорость след
-Ball* ball1 = new Ball(-3, 3, 0.2, 3.1415, 1, 0,  NULL);
-Ball* ball12 = new Ball(-3, -3, 0.2, 3.1415, 1, 0,  ball1);
+Ball* ball1 = new Ball(-3, 3, 0.5, 3.1415, 5, 0,  NULL);
+Ball* ball12 = new Ball(-3, -3, 0.3, 3.1415, 3, 0,  ball1);
 Ball* ball13 = new Ball(0, -3, 0.2, 3.1415, 1, 0,  ball12);
 Ball* ball14 = new Ball(0, 3, 0.2, 3.1415, 1, 0,  ball13);
 Ball* ball3 = new Ball(3, 0, 0.2, 3.1415, 1, 0,  ball14);
