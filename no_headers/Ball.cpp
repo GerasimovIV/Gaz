@@ -189,7 +189,7 @@ void Ball::HitBy( Ball* pBall)
     pBall->SetSpeed( sqrt(newv2x*newv2x + newv2y*newv2y));
     this->SetCenter(x1 + (this->GetSpeed())*cosf(this->GetDirection()), y1 + (this->GetSpeed())*sin(this->GetDirection()));
     pBall->SetCenter(x2 + (pBall->GetSpeed())*cosf(pBall->GetDirection()), y2 + (pBall->GetSpeed())*sin(pBall->GetDirection()));
-    printf("**** %f\n", angle_centers);
+    //printf("**** %f\n", angle_centers);
 }
 
 

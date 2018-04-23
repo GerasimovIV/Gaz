@@ -7,8 +7,14 @@
 float angle = 0.0f; 
 
 // х у радиус направление масса скорость след
-Ball* ball1 = new Ball(3, 0, 0.2, 3.1415, 1, 0.1,  NULL);
-Ball* ball2= new Ball(-2, 0.2, 1, 1, 8, 0,  ball1);
+Ball* ball1 = new Ball(-3, 3, 0.2, 3.1415, 1, 0,  NULL);
+Ball* ball12 = new Ball(-3, -3, 0.2, 3.1415, 1, 0,  ball1);
+Ball* ball13 = new Ball(0, -3, 0.2, 3.1415, 1, 0,  ball12);
+Ball* ball14 = new Ball(0, 3, 0.2, 3.1415, 1, 0,  ball13);
+Ball* ball3 = new Ball(3, 0, 0.2, 3.1415, 1, 0,  ball14);
+Ball* ball4 = new Ball(3,-3, 0.2, 3.1415, 1, 0,  ball3);
+Ball* ball5 = new Ball(0, 0, 0.2, 3.1415, 1, 0,  ball4);
+Ball* ball2 = new Ball(-2, 0.2, 1, 1, 8, 0.1,  ball5);
 
 
 
@@ -77,7 +83,7 @@ void renderScene(void)
         ball->SetCenter(x5 + (ball->GetSpeed())*cosf(ball->GetDirection()), x6 + (ball->GetSpeed())*sin(ball->GetDirection()));
 
 	    Wall* stena = bottom_wall;
-        printf("%f | %f\n", (ball1->GetRegion()).x1, (ball2->GetRegion()).x1);
+        //printf("%f | %f\n", (ball1->GetRegion()).x1, (ball2->GetRegion()).x1);
 	    while ( stena != NULL )
 	    {
 		    if ( (stena->GetRegion()).IntersectRect( ball->GetRegion() ) == true )
@@ -99,9 +105,9 @@ void renderScene(void)
                 float distance = sqrt((x_1 - x_2)*(x_1 - x_2) + (y_1 - y_2)*(y_1 - y_2));
                 if ( distance <= (t->GetRadius() + ball->GetRadius()))
                 {
-                    printf("YES\n");
+                    //printf("YES\n");
                     ball->HitBy(t);
-                    printf("2222 %f | %f\n", (ball1->GetRegion()).x1, (ball2->GetRegion()).x1);
+                    //printf("2222 %f | %f\n", (ball1->GetRegion()).x1, (ball2->GetRegion()).x1);
                 }
             }
             t = t->GetLink();
@@ -115,15 +121,21 @@ void renderScene(void)
         ball1->SetCenter(x5 + (ball1->GetSpeed())*cosf(ball1->GetDirection()), x6 + (ball1->GetSpeed())*sin(ball1->GetDirection()));
 
     }*/
-    ball1->Draw();
-    ball2->Draw();
+    Ball* g = ball2;
+    while (g != NULL)
+    {
+        g->Draw();
+        g = g->GetLink();
+    }
 //    printf("%f\n", ball1->speed);
    
-
-    bottom_wall->Draw();
-    left_wall->Draw();
-    right_wall->Draw();
-    top_wall->Draw();
+    Wall* f = bottom_wall;
+    while (f != NULL)
+    {
+        f->Draw();
+        f = f->GetLink();
+    }
+   
     
     
 
