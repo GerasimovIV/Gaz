@@ -111,7 +111,7 @@ Ball::Ball( float x, float y, float radius, double dir, int mass, float speed, B
 
 void Ball::Draw()
 { 
-    glColor3f(0.0, 1.0, 0.0);
+    glColor3f(0.0, 1.0, 1.0);
     float amountSegments = 100;
     glBegin(GL_POLYGON);
     for(int i = 0; i < amountSegments ; i++)

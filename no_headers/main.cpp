@@ -4,17 +4,18 @@
 #include "Wall.hpp"
 #include <cmath>
 #include <stdio.h>
+
 float angle = 0.0f; 
 
 // х у радиус направление масса скорость след
 Ball* ball1 = new Ball(-3, 3, 0.5, 3.1415, 5, 0,  NULL);
 Ball* ball12 = new Ball(-3, -3, 0.3, 3.1415, 3, 0,  ball1);
-Ball* ball13 = new Ball(0, -3, 0.2, 3.1415, 1, 0,  ball12);
+Ball* ball13 = new Ball(0, -3, 0.2, 5, 1, 0.01,  ball12);
 Ball* ball14 = new Ball(0, 3, 0.2, 3.1415, 1, 0,  ball13);
 Ball* ball3 = new Ball(3, 0, 0.2, 3.1415, 1, 0,  ball14);
 Ball* ball4 = new Ball(3,-3, 0.2, 3.1415, 1, 0,  ball3);
 Ball* ball5 = new Ball(0, 0, 0.2, 3.1415, 1, 0,  ball4);
-Ball* ball2 = new Ball(-2, 0.2, 1, 1, 8, 0.1,  ball5);
+Ball* ball2 = new Ball(-2, 0.2, 1, 1, 8, 0.02,  ball5);
 
 
 
@@ -52,6 +53,28 @@ void changeSize(int w, int h)
 // вернуться к матрице проекции 
     glMatrixMode(GL_MODELVIEW); 
 } 
+
+
+void myMouseFunc(int button, int state, int x, int y)
+{
+        if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
+            //printf("YES\n");
+            Ball* p = ball2;
+            while ( p != NULL )
+            {
+                Ball* p1 = p;
+                p = p->GetLink();
+                p1->SetDirection(p1->GetDirection() + 3.1415);
+            }
+
+        }
+        else if(button == GLUT_LEFT_BUTTON && state == GLUT_UP) {
+            //printf("NO\n");
+        }
+}
+
+
+
 
 void renderScene(void)
 { 
@@ -179,9 +202,23 @@ int main(int argc, char **argv)
     glutDisplayFunc(renderScene); 
     glutReshapeFunc(changeSize); 
     glutIdleFunc(renderScene); 
-
+    glutMouseFunc(myMouseFunc);
 // основной цикл 
     glutMainLoop(); 
+    Ball* k = ball2;
+    while ( k != NULL )
+    {
+        Ball* k1 = k;
+        k = k->GetLink();
+        delete k1;
+    }
+    Wall* s = bottom_wall;
+    while ( s != NULL )
+    {
+        Wall* s1 = s;
+        s = s->GetLink();
+        delete s1;
+    }
 
     return 0; 
 }

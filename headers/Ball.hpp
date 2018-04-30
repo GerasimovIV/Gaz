@@ -4,6 +4,7 @@
 class Ball{
     public:
         Ball(float x, float y, float radius, double dir, int mass, float speed, Ball* pNextBall);
+        ~Ball() {}
         void Draw();
         void Update();
         void HitBy( Ball* pBall);

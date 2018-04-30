@@ -5,6 +5,7 @@
 class Wall {
     public:
         Wall (float left, float top, float right, float bottom, double cf, Wall* pNextWall );
+        ~Wall() {}
         void Draw();
         void HitBy( Ball* pBall);
         Rect GetRegion() { return region; }
