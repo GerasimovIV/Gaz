@@ -1,11 +1,11 @@
 #include <math.h>
-#include <GL/freeglut.h> 
+#include <GL/freeglut.h>
 #include "Ball.hpp"
 #include "Wall.hpp"
 #include <cmath>
 #include <stdio.h>
 
-float angle = 0.0f; 
+float angle = 0.0f;
 
 // х у радиус направление масса скорость след
 Ball* ball1 = new Ball(-3, 3, 0.5, 3.1415, 5, 0,  NULL);
@@ -31,28 +31,28 @@ float modul(float a)
         return a;
     }
     return -a;
-    
+
 }
 
 void changeSize(int w, int h)
-{ 
-// предотвращение деления на ноль 
+{
+// предотвращение деления на ноль
     if (h == 0)
     {
         h = 1;
-    } 
-    float ratio = w * 1.0 / h; 
-// используем матрицу проекции 
-    glMatrixMode(GL_PROJECTION); 
-// обнуляем матрицу 
-    glLoadIdentity(); 
-// установить параметры вьюпорта 
-    glViewport(0, 0, w, h); 
-// установить корректную перспективу 
-    gluPerspective(45.0f, ratio, 0.1f, 100.0f); 
-// вернуться к матрице проекции 
-    glMatrixMode(GL_MODELVIEW); 
-} 
+    }
+    float ratio = w * 1.0 / h;
+// используем матрицу проекции
+    glMatrixMode(GL_PROJECTION);
+// обнуляем матрицу
+    glLoadIdentity();
+// установить параметры вьюпорта
+    glViewport(0, 0, w, h);
+// установить корректную перспективу
+    gluPerspective(45.0f, ratio, 0.1f, 100.0f);
+// вернуться к матрице проекции
+    glMatrixMode(GL_MODELVIEW);
+}
 
 
 void myMouseFunc(int button, int state, int x, int y)
@@ -90,15 +90,15 @@ void myMouseFunc(int button, int state, int x, int y)
 
 
 void renderScene(void)
-{ 
-// очистка буфера цвета и глубины 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
-// обнуление трансформации 
+{
+// очистка буфера цвета и глубины
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+// обнуление трансформации
     glLoadIdentity();
 
-// установка камеры 
-    gluLookAt( 0.0f, 0.0f, 10.0f,0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f); 
-  
+// установка камеры
+    gluLookAt( 0.0f, 0.0f, 10.0f,0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+
 
 
     glRotatef(angle, 0.0f, 1.0f, 0.0f);
@@ -118,11 +118,11 @@ void renderScene(void)
         ball->GetCenter(&x5, &x6);
         ball->SetCenter(x5 + (ball->GetSpeed())*cosf(ball->GetDirection()), x6 + (ball->GetSpeed())*sin(ball->GetDirection()));
 
-	    Wall* stena = bottom_wall;
+            Wall* stena = bottom_wall;
         //printf("%f | %f\n", (ball1->GetRegion()).x1, (ball2->GetRegion()).x1);
-	    while ( stena != NULL )
-	    {
-		    if ( (stena->GetRegion()).IntersectRect( ball->GetRegion() ) == true )
+            while ( stena != NULL )
+            {
+                    if ( (stena->GetRegion()).IntersectRect( ball->GetRegion() ) == true )
             {
                 ball->SetDirection(stena->GetConvertFactor() - ball->GetDirection());
                 ball->SetCenter(x5 + (ball->GetSpeed())*cosf(ball->GetDirection()), x6 + (ball->GetSpeed())*sin(ball->GetDirection()));
@@ -132,7 +132,7 @@ void renderScene(void)
         }
         while (t != NULL)
         {
-            ball->Gravit(t);
+            //ball->Gravit(t);
             if (t != ball)
             {
                 float x_1, y_1;
@@ -147,7 +147,12 @@ void renderScene(void)
 
 
 
+
                     //printf("2222 %f | %f\n", (ball1->GetRegion()).x1, (ball2->GetRegion()).x1);
+                }
+                else
+                {
+                    ball->Gravit(t);
                 }
             }
             // плюс гравитационное взаимодействие
@@ -170,16 +175,16 @@ void renderScene(void)
         g = g->GetLink();
     }
 //    printf("%f\n", ball1->speed);
-   
+
     Wall* f = bottom_wall;
     while (f != NULL)
     {
         f->Draw();
         f = f->GetLink();
     }
-   
-    
-    
+
+
+
 
 
 
@@ -189,7 +194,7 @@ void renderScene(void)
     float y2 = -1;
     float r2 = 0.2;
 
-   
+
     glBegin(GL_POLYGON);
     for(int j = 0; j < 100 ; j++)
     {
@@ -200,30 +205,30 @@ void renderScene(void)
     }
     glEnd();*/
 //    angle+= 0.1f;
-   
 
 
 
-    glutSwapBuffers(); 
-} 
 
-int main(int argc, char **argv) 
-{ 
+    glutSwapBuffers();
+}
 
-// Инициализация GLUT и создание окна 
-    glutInit(&argc, argv); 
-    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA); 
-    glutInitWindowPosition(100,100); 
-    glutInitWindowSize(800,800); 
-    glutCreateWindow("treeangle"); 
+int main(int argc, char **argv)
+{
+
+// Инициализация GLUT и создание окна
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+    glutInitWindowPosition(100,100);
+    glutInitWindowSize(800,800);
+    glutCreateWindow("treeangle");
 
 // регистрация вызываемых функций
-    glutDisplayFunc(renderScene); 
-    glutReshapeFunc(changeSize); 
-    glutIdleFunc(renderScene); 
+    glutDisplayFunc(renderScene);
+    glutReshapeFunc(changeSize);
+    glutIdleFunc(renderScene);
     glutMouseFunc(myMouseFunc);
-// основной цикл 
-    glutMainLoop(); 
+// основной цикл
+    glutMainLoop();
     Ball* k = ball2;
     while ( k != NULL )
     {
@@ -239,5 +244,5 @@ int main(int argc, char **argv)
         delete s1;
     }
 
-    return 0; 
+    return 0;
 }
