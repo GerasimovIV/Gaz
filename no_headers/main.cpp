@@ -10,12 +10,12 @@ float angle = 0.0f;
 // х у радиус направление масса скорость след
 Ball* ball1 = new Ball(-3, 3, 0.5, 3.1415, 5, 0,  NULL);
 Ball* ball12 = new Ball(-3, -3, 0.3, 3.1415, 3, 0,  ball1);
-Ball* ball13 = new Ball(0, -3, 0.2, 5, 1, 0.01,  ball12);
+Ball* ball13 = new Ball(0, -3, 0.2, 5, 3, 0,  ball12);
 Ball* ball14 = new Ball(0, 3, 0.2, 3.1415, 1, 0,  ball13);
 Ball* ball3 = new Ball(3, 0, 0.2, 3.1415, 1, 0,  ball14);
 Ball* ball4 = new Ball(3,-3, 0.2, 3.1415, 1, 0,  ball3);
-Ball* ball5 = new Ball(0, 0, 0.2, 3.1415, 1, 0,  ball4);
-Ball* ball2 = new Ball(-2, 0.2, 1, 1, 8, 0.02,  ball5);
+Ball* ball5 = new Ball(0, 0, 0.2, 3.1415, 1, 0,  ball4 );
+Ball* ball2 = new Ball(-2, 0.2, 1, 1, 8, 0,  ball5);
 
 
 
@@ -58,7 +58,20 @@ void changeSize(int w, int h)
 void myMouseFunc(int button, int state, int x, int y)
 {
         if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
-            //printf("YES\n");
+            /*float ux = float(x) / 100 - 4; // для управления направлением шарика мышкой
+            float uy = 4 + (-1) * float(y) / 100;
+
+            float x1, y1, x2, y2;
+            ball2->GetCenter( &x1, &y1);
+            x2 = ux;
+            y2 = uy;
+            float angle_centers = ball2->GetAngleCenters(x1, y1, x2, y2);
+
+
+
+
+            ball2->SetDirection( angle_centers );*/
+            //printf("%f %f\n", ux, uy);
             Ball* p = ball2;
             while ( p != NULL )
             {
@@ -119,6 +132,7 @@ void renderScene(void)
         }
         while (t != NULL)
         {
+            ball->Gravit(t);
             if (t != ball)
             {
                 float x_1, y_1;
@@ -130,9 +144,14 @@ void renderScene(void)
                 {
                     //printf("YES\n");
                     ball->HitBy(t);
+
+
+
                     //printf("2222 %f | %f\n", (ball1->GetRegion()).x1, (ball2->GetRegion()).x1);
                 }
             }
+            // плюс гравитационное взаимодействие
+
             t = t->GetLink();
         }
         ball = ball->GetLink();
@@ -180,7 +199,7 @@ void renderScene(void)
         glVertex3f(x2 + dx2 - i, y2 + dy2, 0.0);
     }
     glEnd();*/
-//    angle+=0.9f; 
+//    angle+= 0.1f;
    
 
 

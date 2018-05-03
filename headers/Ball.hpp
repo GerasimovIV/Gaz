@@ -22,6 +22,7 @@ class Ball{
         double GetAngleCenters(float x1, float y1, float x2, float y2);
         Rect GetRegion() { return region; }
         double GetAngle_from( float new1x, float newv1y);
+        void Gravit( Ball* t);
                 
         
     private:
