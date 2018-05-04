@@ -12,10 +12,10 @@ Ball* ball1 = new Ball(-3, 3, 0.5, 3.1415, 5, 0,  NULL);
 Ball* ball12 = new Ball(-3, -3, 0.3, 3.1415, 3, 0,  ball1);
 Ball* ball13 = new Ball(0, -3, 0.2, 5, 3, 0,  ball12);
 Ball* ball14 = new Ball(0, 3, 0.2, 3.1415, 1, 0,  ball13);
-Ball* ball3 = new Ball(3, 0, 0.2, 3.1415, 1, 0,  ball14);
+Ball* ball3 = new Ball(3, 0, 0.2, 3.1415, 1, 0.1,  ball14);
 Ball* ball4 = new Ball(3,-3, 0.2, 3.1415, 1, 0,  ball3);
 Ball* ball5 = new Ball(0, 0, 0.2, 3.1415, 1, 0,  ball4 );
-Ball* ball2 = new Ball(-2, 0.2, 1, 1, 8, 0,  ball5);
+Ball* ball2 = new Ball(-2, 0.2, 1, 1, 8, 0.01,  ball5);
 
 
 
@@ -140,11 +140,20 @@ void renderScene(void)
                 t->GetCenter(&x_1, &y_1);
                 ball->GetCenter(&x_2, &y_2);
                 float distance = sqrt((x_1 - x_2)*(x_1 - x_2) + (y_1 - y_2)*(y_1 - y_2));
+
+
                 if ( distance <= (t->GetRadius() + ball->GetRadius()))
                 {
-                    //printf("YES\n");
+                    /*//printf("YES\n");
+                    if (distance <= 0.8 * (t->GetRadius() + ball->GetRadius()))
+                    {
+                        ball->Scolgenie(t);
+                    }
+                    else
+                    {
+                        ball->HitBy(t);
+                    }*/
                     ball->HitBy(t);
-
 
 
 
@@ -152,7 +161,7 @@ void renderScene(void)
                 }
                 else
                 {
-                    ball->Gravit(t);
+                    //ball->Gravit(t);
                 }
             }
             // плюс гравитационное взаимодействие
