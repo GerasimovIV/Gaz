@@ -1,1 +1,0 @@
-/usr/bin/c++    -Wall   CMakeFiles/trees.dir/no_headers/Wall.cpp.o CMakeFiles/trees.dir/no_headers/main.cpp.o CMakeFiles/trees.dir/no_headers/Ball.cpp.o CMakeFiles/trees.dir/no_headers/Rect.cpp.o  -o trees -rdynamic 

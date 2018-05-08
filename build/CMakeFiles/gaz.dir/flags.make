@@ -6,5 +6,5 @@ CXX_FLAGS =  -Wall
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/athlete/MIPT/informatika/2_semestr/zadanie/2/headers 
+CXX_INCLUDES = -I/home/athlete/MIPT/informatika/2_semestr/zadanie/2/gaz/headers 
 

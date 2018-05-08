@@ -244,46 +244,56 @@ void Ball::Gravit( Ball* pBall)
 
 }
 
-void Ball::Scolgenie( Ball* pBall)
+void Ball::ottalkivanie( Ball* pBall)
 {
-    // просто гасим компоненту которая ведет к центру шара t
-    //расчет нового направления для шаров
     float x1, y1, x2, y2;
     this->GetCenter( &x1, &y1);
     pBall->GetCenter(&x2, &y2);
     float angle_centers = this->GetAngleCenters(x1, y1, x2, y2);
-    // компонента х
-    float angle_itog1 = -angle_centers + this->direction;
-    float v1x = this->speed * cos(angle_itog1);
-    float angle_itog2 = -angle_centers + pBall->direction;
-    float v2x = pBall->speed * cos(angle_itog2);
-    float a = this->GetMass() / pBall->GetMass();
-    float newv1x = 0;
-    float newv2x = 0;
-    // компонента у
-    float v1y = this->speed * sin(angle_itog1);
-    float v2y = pBall->speed * sin(angle_itog2);
-    float newv1y = (v2x*(1 - a) + 2*v1x*a) / (a + 1);
-    float newv2y = (2*v2x + a*v1x - v1x) / (a + 1);
+    float r = sqrt((x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
+    //printf("%f || %f\n", r, this->GetRadius() + pBall->GetRadius());
 
-    // угол в системе где ox || прямой на кот лежат центры масс
-    float angle1, angle2;
+    if ( r != 0)
+    {
+            //изменение компонент х
+
+            // компонента х
+        float angle_itog1 = -angle_centers + this->direction;
+        float v1x = this->speed * cos(angle_itog1);
+        float newv1x;
+        if ( x1 < x2 )
+        {
+            newv1x = v1x - 0.000001 * float(pBall->GetMass()) / r ;
+        }
+        else
+        {
+            newv1x = v1x + 0.000001 * float(pBall->GetMass()) / r ;
+        }
+
+            // компонента у
+        float v1y = this->speed * sin(angle_itog1);
+        float newv1y = v1y;
+
+            // угол в системе где ox || прямой на кот лежат центры масс
+        float angle1;
 
 
-    angle1 = this->GetAngle_from(newv1x, newv1y);
-    angle2 = this->GetAngle_from(newv2x, newv2y);
-    // угол в лаб системе отсчета
-    float angle1_lab1 = angle_centers + angle1;
-    float angle2_lab2 = angle_centers + angle2;
-    this->SetDirection(angle1_lab1);
-    pBall->SetDirection(angle2_lab2);
+        angle1 = this->GetAngle_from(newv1x, newv1y);
+            // угол в лаб системе отсчета
+        float angle1_lab1 = angle_centers + angle1;
+        this->SetDirection(angle1_lab1);
 
-    //расчеты для модулей скоростей
-    this->SetSpeed( sqrt(newv1x*newv1x + newv1y*newv1y));
-    pBall->SetSpeed( sqrt(newv2x*newv2x + newv2y*newv2y));
-    this->SetCenter(x1 + (this->GetSpeed())*cosf(this->GetDirection()), y1 + (this->GetSpeed())*sin(this->GetDirection()));
-    pBall->SetCenter(x2 + (pBall->GetSpeed())*cosf(pBall->GetDirection()), y2 + (pBall->GetSpeed())*sin(pBall->GetDirection()));
-    //printf("**** %f\n", angle_centers);
+            //расчеты для модулей скоростей
+
+
+
+
+        this->SetSpeed( sqrt(newv1x*newv1x + newv1y*newv1y));
+        this->SetCenter(x1 + (this->GetSpeed())*cosf(this->GetDirection()), y1 + (this->GetSpeed())*sin(this->GetDirection()));
+            //printf("**** %f\n", angle_centers);
+
+
+    }
+
 }
-
 

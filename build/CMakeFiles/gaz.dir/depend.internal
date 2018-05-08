@@ -4,17 +4,17 @@
 CMakeFiles/gaz.dir/no_headers/Ball.cpp.o
  ../headers/Ball.hpp
  ../headers/Rect.hpp
- /home/athlete/MIPT/informatika/2_semestr/zadanie/2/no_headers/Ball.cpp
+ /home/athlete/MIPT/informatika/2_semestr/zadanie/2/gaz/no_headers/Ball.cpp
 CMakeFiles/gaz.dir/no_headers/Rect.cpp.o
  ../headers/Rect.hpp
- /home/athlete/MIPT/informatika/2_semestr/zadanie/2/no_headers/Rect.cpp
+ /home/athlete/MIPT/informatika/2_semestr/zadanie/2/gaz/no_headers/Rect.cpp
 CMakeFiles/gaz.dir/no_headers/Wall.cpp.o
  ../headers/Ball.hpp
  ../headers/Rect.hpp
  ../headers/Wall.hpp
- /home/athlete/MIPT/informatika/2_semestr/zadanie/2/no_headers/Wall.cpp
+ /home/athlete/MIPT/informatika/2_semestr/zadanie/2/gaz/no_headers/Wall.cpp
 CMakeFiles/gaz.dir/no_headers/main.cpp.o
  ../headers/Ball.hpp
  ../headers/Rect.hpp
  ../headers/Wall.hpp
- /home/athlete/MIPT/informatika/2_semestr/zadanie/2/no_headers/main.cpp
+ /home/athlete/MIPT/informatika/2_semestr/zadanie/2/gaz/no_headers/main.cpp

@@ -12,10 +12,10 @@ Ball* ball1 = new Ball(-3, 3, 0.5, 3.1415, 5, 0,  NULL);
 Ball* ball12 = new Ball(-3, -3, 0.3, 3.1415, 3, 0,  ball1);
 Ball* ball13 = new Ball(0, -3, 0.2, 5, 3, 0,  ball12);
 Ball* ball14 = new Ball(0, 3, 0.2, 3.1415, 1, 0,  ball13);
-Ball* ball3 = new Ball(3, 0, 0.2, 3.1415, 1, 0.1,  ball14);
+Ball* ball3 = new Ball(3, 0, 0.2, 3.1415, 1, 0,  ball14);
 Ball* ball4 = new Ball(3,-3, 0.2, 3.1415, 1, 0,  ball3);
 Ball* ball5 = new Ball(0, 0, 0.2, 3.1415, 1, 0,  ball4 );
-Ball* ball2 = new Ball(-2, 0.2, 1, 1, 8, 0.01,  ball5);
+Ball* ball2 = new Ball(-2, 0.2, 1, 1, 8, 0,  ball5);
 
 
 
@@ -154,6 +154,10 @@ void renderScene(void)
                         ball->HitBy(t);
                     }*/
                     ball->HitBy(t);
+                    if ( distance <= 0.9 * (t->GetRadius() + ball->GetRadius()) )
+                    {
+                        ball->ottalkivanie(t);
+                    }
 
 
 
@@ -161,7 +165,7 @@ void renderScene(void)
                 }
                 else
                 {
-                    //ball->Gravit(t);
+                    ball->Gravit(t);
                 }
             }
             // плюс гравитационное взаимодействие

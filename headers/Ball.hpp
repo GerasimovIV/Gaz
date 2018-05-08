@@ -23,7 +23,7 @@ class Ball{
         Rect GetRegion() { return region; }
         double GetAngle_from( float new1x, float newv1y);
         void Gravit( Ball* t);
-        void Scolgenie( Ball* t);
+        void ottalkivanie( Ball* t);
                 
         
     private:
