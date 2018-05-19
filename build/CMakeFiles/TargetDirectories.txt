@@ -1,0 +1,3 @@
+/home/athlete/MIPT/informatika/2_semestr/zadanie/2/gaz/build/CMakeFiles/edit_cache.dir
+/home/athlete/MIPT/informatika/2_semestr/zadanie/2/gaz/build/CMakeFiles/rebuild_cache.dir
+/home/athlete/MIPT/informatika/2_semestr/zadanie/2/gaz/build/CMakeFiles/gaz.dir

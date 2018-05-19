@@ -1,0 +1,1 @@
+/usr/bin/c++    -Wall   CMakeFiles/gaz.dir/source/Wall.cpp.o CMakeFiles/gaz.dir/source/Ball.cpp.o CMakeFiles/gaz.dir/source/Rect.cpp.o CMakeFiles/gaz.dir/main.cpp.o  -o gaz -rdynamic -lGLU -lGL -lglut 
