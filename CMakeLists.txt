@@ -22,7 +22,7 @@ target_link_libraries(gaz ${OPENGL_LIBRARIES} glut)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
 
-include_directories("headers/")
+include_directories("source/")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
 
